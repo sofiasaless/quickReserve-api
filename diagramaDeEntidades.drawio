@@ -1,0 +1,34 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.4 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.4">
+  <diagram name="Página-1" id="Slah6XdnKtkXLrktwPjn">
+    <mxGraphModel dx="851" dy="461" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Ka6BR2j7Tfsn1UKN2c9--1" value="Restaurante" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="60" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Ka6BR2j7Tfsn1UKN2c9--2" value="+ id: String&amp;lt;UUID&amp;gt;&lt;br&gt;+ nome: String&lt;br&gt;+ cnpj: String&lt;div&gt;+ email: String &amp;lt;Email&amp;gt;&lt;br&gt;&lt;div&gt;+ senha: String&lt;/div&gt;&lt;div&gt;+ localizacao: Local&lt;/div&gt;&lt;div&gt;+ dataDeCriacao: LocalDateTIme&lt;/div&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="Ka6BR2j7Tfsn1UKN2c9--1">
+          <mxGeometry y="50" width="200" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="Ka6BR2j7Tfsn1UKN2c9--4" value="Mesa" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="80" width="240" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Ka6BR2j7Tfsn1UKN2c9--5" value="+ id: String&amp;lt;UUID&amp;gt;&lt;div&gt;+ numero: int&lt;br&gt;&lt;div&gt;&lt;div&gt;+ restauranteId: Restaurante&lt;/div&gt;&lt;div&gt;+ status: Enum&amp;lt;Reservada, Disponivel&amp;gt;&lt;/div&gt;&lt;div&gt;+ dataDeCriacao: LocalDateTIme&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="Ka6BR2j7Tfsn1UKN2c9--4">
+          <mxGeometry y="50" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Ka6BR2j7Tfsn1UKN2c9--6" value="Reserva" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="280" width="300" height="175" as="geometry" />
+        </mxCell>
+        <mxCell id="Ka6BR2j7Tfsn1UKN2c9--7" value="+ id: String&amp;lt;UUID&amp;gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;+ restauranteId: Restaurante&lt;/div&gt;&lt;div&gt;+ mesaId: Mesa&lt;br&gt;+ clienteId: Cliente&lt;/div&gt;&lt;div&gt;+ dataParaReserva: Date&lt;/div&gt;&lt;div&gt;+ status: Enum&amp;lt;Confirmada, Pendente, Cancelada&amp;gt;&lt;/div&gt;&lt;div&gt;+ dataDeCriacao: LocalDateTIme&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="Ka6BR2j7Tfsn1UKN2c9--6">
+          <mxGeometry y="50" width="300" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="Ka6BR2j7Tfsn1UKN2c9--10" value="Cliente" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="250" width="200" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Ka6BR2j7Tfsn1UKN2c9--11" value="+ id: String&amp;lt;UUID&amp;gt;&lt;br&gt;+ nome: String&lt;br&gt;+ cpf: String&lt;div&gt;+ email: String&amp;lt;Email&amp;gt;&lt;br&gt;&lt;div&gt;+ senha: String&lt;/div&gt;&lt;div&gt;+ dataDeNascimento: Date&lt;/div&gt;&lt;div&gt;+ dataDeCriacao: LocalDateTIme&lt;/div&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="Ka6BR2j7Tfsn1UKN2c9--10">
+          <mxGeometry y="50" width="200" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
