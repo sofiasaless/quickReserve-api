@@ -1,5 +1,7 @@
 package com.br.quickReserve.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.br.quickReserve.model.RestauranteEntity;
@@ -15,6 +17,10 @@ public class RestauranteService {
 
     public RestauranteEntity salvarRestaurante(RestauranteEntity restauranteEntity) {
         return this.restauranteRepository.save(restauranteEntity);
+    }
+
+    public List<RestauranteEntity> listarTodosRestaurantes() {
+        return this.restauranteRepository.findAll();
     }
 
 }
