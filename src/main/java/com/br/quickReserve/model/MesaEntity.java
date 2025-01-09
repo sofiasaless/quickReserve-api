@@ -4,12 +4,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.br.quickReserve.model.enums.StatusMesa;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,8 +32,9 @@ public class MesaEntity {
     @Column(name = "restaurante_id", nullable = false)
     private Long restauranteId;
 
-    @Enumerated(EnumType.STRING)
-    private StatusMesa statusMesa;
+    // por enquanto nao vai ser necessário
+    // @Enumerated(EnumType.STRING)
+    // private StatusMesa statusMesa;
     
     @CreationTimestamp
     private LocalDateTime criadoEm;

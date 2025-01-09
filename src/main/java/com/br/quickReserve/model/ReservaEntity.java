@@ -1,11 +1,12 @@
 package com.br.quickReserve.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.br.quickReserve.model.enums.StatusReserva;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,8 +43,8 @@ public class ReservaEntity {
     @Column(name = "cliente_id", nullable = false)
     private Long clienteId;
 
-    @CreationTimestamp
-    private Date dataParaReserva;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataParaReserva;
 
     @Enumerated(EnumType.STRING)
     private StatusReserva statusReserva;
