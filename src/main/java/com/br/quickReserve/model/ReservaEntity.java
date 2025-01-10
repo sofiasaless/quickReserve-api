@@ -46,6 +46,8 @@ public class ReservaEntity {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataParaReserva;
 
+    // posteriormente pode ser necessário colocar o id dos restaurantes também, apenas da mesa já conter isso
+
     @Enumerated(EnumType.STRING)
     private StatusReserva statusReserva;
     

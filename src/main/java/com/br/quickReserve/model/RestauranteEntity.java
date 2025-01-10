@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,8 +22,13 @@ public class RestauranteEntity {
     private Long id;
     
     private String nome;
+
+    @Column(unique = true)
     private String cnpj;
+
+    @Column(unique = true)
     private String email;
+
     private String senha;
 
     @CreationTimestamp
