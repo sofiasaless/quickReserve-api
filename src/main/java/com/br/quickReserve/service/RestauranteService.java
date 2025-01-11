@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.br.quickReserve.dto.request.RestauranteRequestDTO;
 import com.br.quickReserve.model.RestauranteEntity;
 import com.br.quickReserve.repository.RestauranteRepository;
 
@@ -15,8 +16,14 @@ public class RestauranteService {
     
     private final RestauranteRepository restauranteRepository;
 
-    public RestauranteEntity salvarRestaurante(RestauranteEntity restauranteEntity) {
-        return this.restauranteRepository.save(restauranteEntity);
+    public RestauranteEntity salvarRestaurante(RestauranteRequestDTO restauranteRequestDTO) {
+        var entidadeRestaurante = RestauranteEntity.builder()
+            .nome(restauranteRequestDTO.getNome())
+            .cnpj(restauranteRequestDTO.getCnpj())
+            .email(restauranteRequestDTO.getEmail())
+            .senha(restauranteRequestDTO.getSenha())
+        .build();
+        return this.restauranteRepository.save(entidadeRestaurante);
     }
 
     public List<RestauranteEntity> listarTodosRestaurantes() {

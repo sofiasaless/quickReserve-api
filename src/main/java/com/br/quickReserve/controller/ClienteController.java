@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.br.quickReserve.dto.request.ClienteRequestDTO;
 import com.br.quickReserve.model.ClienteEntity;
 import com.br.quickReserve.service.ClienteService;
 
@@ -22,8 +23,8 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> cadastrarCliente(@RequestBody ClienteEntity clienteEntity) {
-        return ResponseEntity.ok().body(this.clienteService.salvarCliente(clienteEntity));
+    public ResponseEntity<Object> cadastrarCliente(@RequestBody ClienteRequestDTO clienteRequestDTO) {
+        return ResponseEntity.ok().body(this.clienteService.salvarCliente(clienteRequestDTO));
     }
 
     @GetMapping("/")

@@ -1,4 +1,4 @@
-package com.br.quickReserve.dto;
+package com.br.quickReserve.dto.request;
 
 import java.time.LocalDate;
 

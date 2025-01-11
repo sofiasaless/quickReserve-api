@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.br.quickReserve.dto.BuscarReversaRequestDTO;
+import com.br.quickReserve.dto.request.BuscarReversaRequestDTO;
+import com.br.quickReserve.dto.request.ReservaRequestDTO;
 import com.br.quickReserve.model.ReservaEntity;
 import com.br.quickReserve.service.ReservaService;
 
@@ -21,8 +22,8 @@ public class ReservaController {
     private final ReservaService reservaService;
 
     @PostMapping("/nova-reserva")
-    public ResponseEntity<Object> efetuarReserva(@RequestBody ReservaEntity reservaEntity) {
-        return new ResponseEntity<>(this.reservaService.salvarReserva(reservaEntity), HttpStatus.CREATED);
+    public ResponseEntity<Object> efetuarReserva(@RequestBody ReservaRequestDTO reservaRequestDTO) {
+        return new ResponseEntity<>(this.reservaService.salvarReserva(reservaRequestDTO), HttpStatus.CREATED);
     }
 
     @PostMapping("/encontrar")
