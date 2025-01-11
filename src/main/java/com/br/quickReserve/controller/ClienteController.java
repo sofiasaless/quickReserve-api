@@ -2,6 +2,7 @@ package com.br.quickReserve.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.quickReserve.dto.request.ClienteRequestDTO;
+import com.br.quickReserve.exception.dto.BadRequestDTO;
 import com.br.quickReserve.model.ClienteEntity;
 import com.br.quickReserve.service.ClienteService;
 
@@ -24,7 +26,11 @@ public class ClienteController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> cadastrarCliente(@RequestBody ClienteRequestDTO clienteRequestDTO) {
-        return ResponseEntity.ok().body(this.clienteService.salvarCliente(clienteRequestDTO));
+        try {
+            return new ResponseEntity<>(this.clienteService.salvarCliente(clienteRequestDTO), HttpStatus.CREATED);            
+        } catch (Exception e) {
+            return new ResponseEntity<>(new BadRequestDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/")

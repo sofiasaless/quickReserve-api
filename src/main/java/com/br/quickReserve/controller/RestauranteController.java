@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.quickReserve.dto.request.RestauranteRequestDTO;
+import com.br.quickReserve.exception.dto.BadRequestDTO;
 import com.br.quickReserve.model.RestauranteEntity;
 import com.br.quickReserve.service.RestauranteService;
 
@@ -25,8 +26,11 @@ public class RestauranteController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> cadastrarRestaurante(@RequestBody RestauranteRequestDTO restauranteEntity) {
-        // return ResponseEntity.ok().body(this.restauranteService.salvarRestaurante(restauranteEntity));
-        return new ResponseEntity<>(this.restauranteService.salvarRestaurante(restauranteEntity), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(this.restauranteService.salvarRestaurante(restauranteEntity), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new BadRequestDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/")

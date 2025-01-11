@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.br.quickReserve.dto.request.RestauranteRequestDTO;
+import com.br.quickReserve.exception.RestauranteJaCadastradoException;
 import com.br.quickReserve.model.RestauranteEntity;
 import com.br.quickReserve.repository.RestauranteRepository;
 
@@ -17,6 +18,10 @@ public class RestauranteService {
     private final RestauranteRepository restauranteRepository;
 
     public RestauranteEntity salvarRestaurante(RestauranteRequestDTO restauranteRequestDTO) {
+        this.restauranteRepository.findByCnpjOrEmail(restauranteRequestDTO.getCnpj(), restauranteRequestDTO.getEmail()).ifPresent((user) -> {
+            throw new RestauranteJaCadastradoException();
+        });
+        
         var entidadeRestaurante = RestauranteEntity.builder()
             .nome(restauranteRequestDTO.getNome())
             .cnpj(restauranteRequestDTO.getCnpj())
