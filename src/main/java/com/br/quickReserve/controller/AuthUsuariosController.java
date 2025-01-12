@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.br.quickReserve.dto.request.AuthRequestDTO;
 import com.br.quickReserve.dto.response.TokenResponseDTO;
 import com.br.quickReserve.exception.dto.BadRequestDTO;
-import com.br.quickReserve.service.ClienteService;
-import com.br.quickReserve.service.RestauranteService;
+import com.br.quickReserve.service.AuthUsuariosService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,14 +19,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthUsuariosController {
     
-    private final ClienteService clienteService;
-
-    private final RestauranteService restauranteService;
+    private final AuthUsuariosService authUsuariosService;
 
     @PostMapping("/cliente")
     public ResponseEntity<Object> entrarComoCliente(@RequestBody AuthRequestDTO authRequestDTO) {
         try {
-            return new ResponseEntity<>(new TokenResponseDTO(this.clienteService.entrarComoCliente(authRequestDTO)), HttpStatus.OK);
+            return new ResponseEntity<>(new TokenResponseDTO(this.authUsuariosService.entrarComoCliente(authRequestDTO)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new BadRequestDTO(e.getMessage()), HttpStatus.UNAUTHORIZED);
         }
@@ -36,7 +33,7 @@ public class AuthUsuariosController {
     @PostMapping("/restaurante")
     public ResponseEntity<Object> entrarComoRestaurante(@RequestBody AuthRequestDTO authRequestDTO) {
         try {
-            return new ResponseEntity<>(new TokenResponseDTO(this.restauranteService.entrarComoRestaurante(authRequestDTO)), HttpStatus.OK);
+            return new ResponseEntity<>(new TokenResponseDTO(this.authUsuariosService.entrarComoRestaurante(authRequestDTO)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new BadRequestDTO(e.getMessage()), HttpStatus.UNAUTHORIZED);
         }        

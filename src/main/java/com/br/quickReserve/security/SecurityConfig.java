@@ -2,6 +2,7 @@ package com.br.quickReserve.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +21,7 @@ public class SecurityConfig {
 
                 auth.requestMatchers("/cliente/**").permitAll();
                 auth.requestMatchers( "/restaurante/**").permitAll();
+                auth.requestMatchers(HttpMethod.GET, "/mesas/**");
                 auth.requestMatchers( "/entrar/**").permitAll();
 
                 auth.anyRequest().authenticated();
