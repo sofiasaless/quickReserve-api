@@ -1,11 +1,12 @@
 package com.br.quickReserve.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.br.quickReserve.model.enums.StatusReserva;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,11 +18,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "reservas")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReservaEntity {
 
     @Id
@@ -42,8 +49,10 @@ public class ReservaEntity {
     @Column(name = "cliente_id", nullable = false)
     private Long clienteId;
 
-    @CreationTimestamp
-    private Date dataParaReserva;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataParaReserva;
+
+    // posteriormente pode ser necessário colocar o id dos restaurantes também, apenas da mesa já conter isso
 
     @Enumerated(EnumType.STRING)
     private StatusReserva statusReserva;
