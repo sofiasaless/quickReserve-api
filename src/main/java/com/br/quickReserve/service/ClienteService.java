@@ -2,6 +2,7 @@ package com.br.quickReserve.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.br.quickReserve.dto.request.ClienteRequestDTO;
@@ -17,6 +18,9 @@ public class ClienteService {
     
     private final ClienteRepository clienteRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
+
     public ClienteEntity salvarCliente(ClienteRequestDTO clienteRequestDTO) {
         this.clienteRepository.findByCpfOrEmail(clienteRequestDTO.getCpf(), clienteRequestDTO.getEmail()).ifPresent((cli) -> {
             throw new ClienteJaCadastradoException();
@@ -26,7 +30,7 @@ public class ClienteService {
             .nome(clienteRequestDTO.getNome())
             .cpf(clienteRequestDTO.getCpf())
             .email(clienteRequestDTO.getEmail())
-            .senha(clienteRequestDTO.getSenha())
+            .senha(passwordEncoder.encode(clienteRequestDTO.getSenha()))
             .dataAniversario(clienteRequestDTO.getDataAniversario())
         .build();
         return this.clienteRepository.save(entidadeCliente);
