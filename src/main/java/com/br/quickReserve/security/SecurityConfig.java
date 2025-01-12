@@ -20,6 +20,7 @@ public class SecurityConfig {
 
                 auth.requestMatchers("/cliente/**").permitAll();
                 auth.requestMatchers( "/restaurante/**").permitAll();
+                auth.requestMatchers( "/entrar/**").permitAll();
 
                 auth.anyRequest().authenticated();
             })        
