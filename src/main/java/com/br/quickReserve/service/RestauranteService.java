@@ -2,6 +2,7 @@ package com.br.quickReserve.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.br.quickReserve.dto.request.RestauranteRequestDTO;
@@ -17,6 +18,8 @@ public class RestauranteService {
     
     private final RestauranteRepository restauranteRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     public RestauranteEntity salvarRestaurante(RestauranteRequestDTO restauranteRequestDTO) {
         this.restauranteRepository.findByCnpjOrEmail(restauranteRequestDTO.getCnpj(), restauranteRequestDTO.getEmail()).ifPresent((user) -> {
             throw new RestauranteJaCadastradoException();
@@ -26,7 +29,7 @@ public class RestauranteService {
             .nome(restauranteRequestDTO.getNome())
             .cnpj(restauranteRequestDTO.getCnpj())
             .email(restauranteRequestDTO.getEmail())
-            .senha(restauranteRequestDTO.getSenha())
+            .senha(passwordEncoder.encode(restauranteRequestDTO.getSenha()))
         .build();
         return this.restauranteRepository.save(entidadeRestaurante);
     }
