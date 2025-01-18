@@ -2,10 +2,13 @@ package com.br.quickReserve.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.br.quickReserve.dto.request.RestauranteRequestDTO;
+import com.br.quickReserve.dto.response.PerfilClienteReponseDTO;
+import com.br.quickReserve.dto.response.PerfilRestauranteReponseDTO;
 import com.br.quickReserve.exception.RestauranteJaCadastradoException;
 import com.br.quickReserve.model.RestauranteEntity;
 import com.br.quickReserve.repository.RestauranteRepository;
@@ -36,6 +39,20 @@ public class RestauranteService {
 
     public List<RestauranteEntity> listarTodosRestaurantes() {
         return this.restauranteRepository.findAll();
+    }
+
+    public PerfilRestauranteReponseDTO visualizarPerfilPorId(Long id) {
+        var restaurante = this.restauranteRepository.findById(id).orElseThrow(() -> {
+            throw new UsernameNotFoundException("Restaurante não encontrado!");
+        });
+
+        return new PerfilRestauranteReponseDTO(
+            restaurante.getId(),
+            restaurante.getNome(),
+            restaurante.getCnpj(),
+            restaurante.getEmail()
+        );
+
     }
 
 }

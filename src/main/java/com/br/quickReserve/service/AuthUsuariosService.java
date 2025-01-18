@@ -2,6 +2,7 @@ package com.br.quickReserve.service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 
 import javax.naming.AuthenticationException;
 
@@ -49,6 +50,7 @@ public class AuthUsuariosService {
             .withIssuer("upbusiness")
             .withExpiresAt(Instant.now().plus(Duration.ofHours(2))) // passando o tempo de expiração do token
             .withSubject(cliente.getId().toString()) // passando uma informação unica da entidade
+            .withClaim("roles", Arrays.asList("CLIENTE")) // setando as roles do usuario
             .sign(algorithm) // passando o algoritmo de criação do token
         ;
         return token;
@@ -72,6 +74,7 @@ public class AuthUsuariosService {
             .withIssuer("upbusiness")
             .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
             .withSubject(restaurante.getId().toString()) // passando uma informação unica da entidade
+            .withClaim("roles", Arrays.asList("RESTAURANTE"))
             .sign(algorithm) // passando o algoritmo de criação do token
         ;
         return token;

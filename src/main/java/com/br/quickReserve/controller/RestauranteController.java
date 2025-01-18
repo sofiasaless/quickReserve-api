@@ -15,6 +15,7 @@ import com.br.quickReserve.exception.dto.BadRequestDTO;
 import com.br.quickReserve.model.RestauranteEntity;
 import com.br.quickReserve.service.RestauranteService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,6 +37,18 @@ public class RestauranteController {
     @GetMapping("/")
     public ResponseEntity<List<RestauranteEntity>> listarTodos() {
         return ResponseEntity.ok().body(this.restauranteService.listarTodosRestaurantes());
+    }
+
+    @GetMapping("/perfil")
+    public ResponseEntity<Object> visualizarPerfil(HttpServletRequest request) {
+        var id = request.getAttribute("restaurante_id");
+
+        try {
+            var perfil = this.restauranteService.visualizarPerfilPorId(Long.valueOf(id.toString()));
+            return ResponseEntity.ok().body(perfil);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
 
 }

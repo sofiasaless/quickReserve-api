@@ -2,10 +2,12 @@ package com.br.quickReserve.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.br.quickReserve.dto.request.ClienteRequestDTO;
+import com.br.quickReserve.dto.response.PerfilClienteReponseDTO;
 import com.br.quickReserve.exception.ClienteJaCadastradoException;
 import com.br.quickReserve.model.ClienteEntity;
 import com.br.quickReserve.repository.ClienteRepository;
@@ -37,6 +39,21 @@ public class ClienteService {
 
     public List<ClienteEntity> listarTodosClientes() {
         return this.clienteRepository.findAll();
+    }
+
+    public PerfilClienteReponseDTO visualizarPerfilPorId(Long id) {
+        var cliente = this.clienteRepository.findById(id).orElseThrow(() -> {
+            throw new UsernameNotFoundException("Cliente não encontrado!");
+        });
+
+        return new PerfilClienteReponseDTO(
+            cliente.getId(),
+            cliente.getNome(),
+            cliente.getCpf(),
+            cliente.getEmail(),
+            cliente.getDataAniversario()
+        );
+
     }
 
 }
