@@ -18,9 +18,8 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-// por enquanto o securityfilter será apenas para o restaurente
-public class SecurityFilter extends OncePerRequestFilter {
-
+public class SecurityFilterCliente extends OncePerRequestFilter {
+    
     private final JWTProvider jwtProvider;
 
     @Override
@@ -37,8 +36,8 @@ public class SecurityFilter extends OncePerRequestFilter {
                 return;
             }
 
-            // setando o id do restaurante no request, assim todas requisições que forem necessárias seu id, serão passadas a partir do subject do token
-            request.setAttribute("restaurante_id", subjectToken);
+            // setando o id do cliente no request, assim todas requisições que forem necessárias seu id, serão passadas a partir do subject do token
+            request.setAttribute("cliente_id", subjectToken);
 
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(subjectToken, null, Collections.emptyList());
             SecurityContextHolder.getContext().setAuthentication(auth);
@@ -47,5 +46,5 @@ public class SecurityFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
 
     }
-    
+
 }

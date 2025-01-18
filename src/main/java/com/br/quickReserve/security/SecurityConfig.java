@@ -15,7 +15,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
     
-    private final SecurityFilter securityFilter;
+    private final SecurityFilterRestaurante securityFilterRestaurante;
+
+    private final SecurityFilterCliente securityFilterCliente;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -25,16 +27,17 @@ public class SecurityConfig {
             // passando as rotas publicas
             .authorizeHttpRequests(auth -> {
 
-                auth.requestMatchers("/cliente/**").permitAll();
                 auth.requestMatchers( "/restaurante/**").permitAll();
                 auth.requestMatchers(HttpMethod.GET, "/mesas/**");
+                auth.requestMatchers("/cliente/**").permitAll();
                 auth.requestMatchers( "/entrar/**").permitAll();
 
                 auth.anyRequest().authenticated();
             })        
             
             // criando filtro para as rotas, verificando se o token do usuario permite ele ter acesso a rotas protegidas
-            .addFilterBefore(securityFilter, BasicAuthenticationFilter.class)
+            .addFilterBefore(securityFilterRestaurante, BasicAuthenticationFilter.class)
+            .addFilterBefore(securityFilterCliente, BasicAuthenticationFilter.class)
         ;
         
         
