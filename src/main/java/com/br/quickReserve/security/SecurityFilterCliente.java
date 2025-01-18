@@ -1,9 +1,9 @@
 package com.br.quickReserve.security;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -25,22 +25,31 @@ public class SecurityFilterCliente extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // setando primeiramente os headers como nulos
-        SecurityContextHolder.getContext().setAuthentication(null);
+        // SecurityContextHolder.getContext().setAuthentication(null);
         // agora pegando o header de autorização
         String header = request.getHeader("Authorization");
 
-        if (header != null) {
-            var subjectToken = this.jwtProvider.validarToken(header);
-            if (subjectToken.isEmpty()) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
+        if (request.getRequestURI().startsWith("/cliente")) {
+            if (header != null) {
+                var token = this.jwtProvider.validarToken(header);
+                if (token == null) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    return;
+                }
+    
+                // setando o id do cliente no request, assim todas requisições que forem necessárias seu id, serão passadas a partir do subject do token
+                request.setAttribute("cliente_id", token.getSubject());
+    
+                // mapeando as roles que estão no jwt
+                var roles = token.getClaim("roles").asList(Object.class);
+                var rolesDeAutorizacao = roles.stream()
+                .map(
+                    role -> new SimpleGrantedAuthority("ROLE_"+role.toString().toUpperCase()) 
+                ).toList();
+    
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(token.getSubject(), null, rolesDeAutorizacao);
+                SecurityContextHolder.getContext().setAuthentication(auth);
             }
-
-            // setando o id do cliente no request, assim todas requisições que forem necessárias seu id, serão passadas a partir do subject do token
-            request.setAttribute("cliente_id", subjectToken);
-
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(subjectToken, null, Collections.emptyList());
-            SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         filterChain.doFilter(request, response);

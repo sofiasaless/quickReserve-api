@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Service
 public class JWTProvider {
@@ -12,23 +14,23 @@ public class JWTProvider {
     @Value("${security.token.secret}")
     private String secretKey;
 
-    public String validarToken(String token) {
+    // mudei o retorno do metodo para retornar um jwt decodificado, assim pegando todos os atributos de uma vez
+    // .... ao invés de pegar apenas o subject
+    public DecodedJWT validarToken(String token) {
         // o token chega com o prefixo bearer, então é necessário fazer replace por ""
         token = token.replace("Bearer ", "");
-
-        Algorithm algoritimo = Algorithm.HMAC256(secretKey);
+        
+        Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
         try {
-            // o subject vai ser o que foi passado no campo subject quando aconteceu a criação do token, no caso, será o id dos clientes e restaurantes
-            var subject = JWT.require(algoritimo)
+            var tokenDecoded = JWT.require(algorithm)
             .build()
-            .verify(token)
-            .getSubject();
-
-            return subject;
-        } catch (Exception e) {
-            return "";
+            .verify(token);
+            return tokenDecoded;
+        } catch (JWTVerificationException e) {
+            e.printStackTrace();
+            return null;
         }
-
     }
+
 }
