@@ -3,6 +3,7 @@ package com.br.quickReserve.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import com.br.quickReserve.exception.dto.BadRequestDTO;
 import com.br.quickReserve.model.RestauranteEntity;
 import com.br.quickReserve.service.RestauranteService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,6 +38,18 @@ public class RestauranteController {
     @GetMapping("/")
     public ResponseEntity<List<RestauranteEntity>> listarTodos() {
         return ResponseEntity.ok().body(this.restauranteService.listarTodosRestaurantes());
+    }
+
+    @GetMapping("/perfil")
+    public ResponseEntity<Object> visualizarPerfil(HttpServletRequest request) {
+        var id = request.getAttribute("restaurante_id");
+
+        try {
+            var perfil = this.restauranteService.visualizarPerfilPorId(Long.valueOf(id.toString()));
+            return ResponseEntity.ok().body(perfil);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
 
 }

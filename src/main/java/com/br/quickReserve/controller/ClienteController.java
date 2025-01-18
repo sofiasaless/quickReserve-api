@@ -1,6 +1,7 @@
 package com.br.quickReserve.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import com.br.quickReserve.exception.dto.BadRequestDTO;
 import com.br.quickReserve.model.ClienteEntity;
 import com.br.quickReserve.service.ClienteService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,6 +38,19 @@ public class ClienteController {
     @GetMapping("/")
     public ResponseEntity<List<ClienteEntity>> listarTodos() {
         return ResponseEntity.ok().body(this.clienteService.listarTodosClientes());
+    }
+
+    @GetMapping("/perfil")
+    public ResponseEntity<Object> visualizarPerfil(HttpServletRequest request) {
+        var id = request.getAttribute("cliente_id");
+    
+        try {
+            var perfil = this.clienteService.visualizarPerfilPorId(Long.valueOf(id.toString()));
+            return ResponseEntity.ok().body(perfil);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    
     }
 
 }
