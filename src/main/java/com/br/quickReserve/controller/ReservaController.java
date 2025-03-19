@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.br.quickReserve.dto.request.BuscarReversaRequestDTO;
 import com.br.quickReserve.dto.request.ReservaRequestDTO;
+import com.br.quickReserve.exception.dto.BadRequestDTO;
 import com.br.quickReserve.model.ReservaEntity;
 import com.br.quickReserve.service.ReservaService;
 
@@ -25,7 +26,11 @@ public class ReservaController {
     @PreAuthorize("hasRole('CLIENTE')")
     @PostMapping("/nova-reserva")
     public ResponseEntity<Object> efetuarReserva(@RequestBody ReservaRequestDTO reservaRequestDTO) {
-        return new ResponseEntity<>(this.reservaService.salvarReserva(reservaRequestDTO), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(this.reservaService.salvarReserva(reservaRequestDTO), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new BadRequestDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/encontrar")
