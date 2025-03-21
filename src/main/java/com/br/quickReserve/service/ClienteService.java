@@ -51,7 +51,8 @@ public class ClienteService {
             cliente.getNome(),
             cliente.getCpf(),
             cliente.getEmail(),
-            cliente.getDataAniversario()
+            cliente.getDataAniversario(),
+            cliente.getCriadoEm()
         );
 
     }

@@ -50,7 +50,8 @@ public class RestauranteService {
             restaurante.getId(),
             restaurante.getNome(),
             restaurante.getCnpj(),
-            restaurante.getEmail()
+            restaurante.getEmail(),
+            restaurante.getCriadoEm()
         );
 
     }

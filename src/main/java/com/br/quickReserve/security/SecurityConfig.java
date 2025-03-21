@@ -29,10 +29,10 @@ public class SecurityConfig {
             // passando as rotas publicas
             .authorizeHttpRequests(auth -> {
 
-                auth.requestMatchers("/reservas/**").permitAll();
                 auth.requestMatchers(HttpMethod.GET, "/restaurante/mesas/**");
                 auth.requestMatchers( "/restaurante/**").permitAll();
                 auth.requestMatchers("/cliente/**").permitAll();
+                auth.requestMatchers("/reservas/**").permitAll();
                 auth.requestMatchers( "/entrar/**").permitAll();
 
                 auth.anyRequest().authenticated();

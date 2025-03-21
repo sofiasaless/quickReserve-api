@@ -1,5 +1,6 @@
 package com.br.quickReserve.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,7 +27,12 @@ public class MesaService {
     }
 
     public List<MesaEntity> listarMesasPorEstabelecimento(Long id){
-        return this.mesaRepository.findByRestauranteId(id);
+        
+        // alternativa para evitar a exposição de informações senvíveis da entidade restaurante, setei o restauranteEntity como null, por enquanto foi a alternativa que achei mais viável
+        List<MesaEntity> listaMesas = this.mesaRepository.findByRestauranteId(id);
+        listaMesas.stream().forEach(mesa -> mesa.setRestauranteEntity(null));
+
+        return listaMesas;
     }
 
 }

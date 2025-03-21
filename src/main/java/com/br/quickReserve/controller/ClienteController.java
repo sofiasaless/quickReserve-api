@@ -34,7 +34,7 @@ public class ClienteController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping("/") // rota para posterior descarte
     public ResponseEntity<List<ClienteEntity>> listarTodos() {
         return ResponseEntity.ok().body(this.clienteService.listarTodosClientes());
     }
