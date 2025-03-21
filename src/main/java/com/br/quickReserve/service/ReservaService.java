@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.br.quickReserve.dto.request.BuscarReversaMesaRequestDTO;
 import com.br.quickReserve.dto.request.BuscarReversaRequestDTO;
 import com.br.quickReserve.dto.request.ReservaRequestDTO;
 import com.br.quickReserve.exception.MesaNaoDisponivelException;
 import com.br.quickReserve.model.ReservaEntity;
+import com.br.quickReserve.model.enums.StatusReserva;
 import com.br.quickReserve.repository.ReservaRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -37,8 +37,16 @@ public class ReservaService {
     public ReservaEntity encontrarReservaPorMesaEData(BuscarReversaRequestDTO buscarReversaRequestDTO) {
         return this.reservaRepository.findByDataParaReservaAndMesaId(buscarReversaRequestDTO.dataParaReserva(), buscarReversaRequestDTO.mesaId()).orElse(new ReservaEntity());
     }
+    
+    public List<ReservaEntity> encontrarReservaPorMesa(Long id, String statusReserva) {
+        return this.reservaRepository.findByMesaIdAndStatusReserva(id, StatusReserva.valueOf(statusReserva));
+    }
 
-     public List<ReservaEntity> listarTodasReservas() {
+    public List<ReservaEntity> encontrarReservaPorRestaurante(Long id, String statusReserva) {
+        return this.reservaRepository.findByRestauranteId(id, statusReserva);
+    }
+
+    public List<ReservaEntity> listarTodasReservas() {
         return this.reservaRepository.findAll();
     }
 
