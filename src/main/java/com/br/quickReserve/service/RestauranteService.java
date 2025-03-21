@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.br.quickReserve.dto.request.RestauranteRequestDTO;
-import com.br.quickReserve.dto.response.PerfilClienteReponseDTO;
 import com.br.quickReserve.dto.response.PerfilRestauranteReponseDTO;
 import com.br.quickReserve.exception.RestauranteJaCadastradoException;
 import com.br.quickReserve.model.RestauranteEntity;
@@ -50,7 +49,8 @@ public class RestauranteService {
             restaurante.getId(),
             restaurante.getNome(),
             restaurante.getCnpj(),
-            restaurante.getEmail()
+            restaurante.getEmail(),
+            restaurante.getCriadoEm()
         );
 
     }

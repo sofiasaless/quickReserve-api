@@ -29,7 +29,7 @@ public class SecurityFilterCliente extends OncePerRequestFilter {
         // agora pegando o header de autorização
         String header = request.getHeader("Authorization");
 
-        if (request.getRequestURI().startsWith("/cliente")) {
+        if (request.getRequestURI().startsWith("/cliente") || request.getRequestURI().startsWith("/reservas/cliente")) {
             if (header != null) {
                 var token = this.jwtProvider.validarToken(header);
                 if (token == null) {

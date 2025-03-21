@@ -32,6 +32,7 @@ public class SecurityConfig {
                 auth.requestMatchers(HttpMethod.GET, "/restaurante/mesas/**");
                 auth.requestMatchers( "/restaurante/**").permitAll();
                 auth.requestMatchers("/cliente/**").permitAll();
+                auth.requestMatchers("/reservas/**").permitAll();
                 auth.requestMatchers( "/entrar/**").permitAll();
 
                 auth.anyRequest().authenticated();
