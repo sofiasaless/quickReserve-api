@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.br.quickReserve.dto.request.BuscarReversaRequestDTO;
 import com.br.quickReserve.dto.request.ReservaRequestDTO;
+import com.br.quickReserve.dto.request.ReservaUpdateRequestDTO;
 import com.br.quickReserve.exception.MesaNaoDisponivelException;
+import com.br.quickReserve.exception.ReservaNaoEncontradaException;
 import com.br.quickReserve.model.ReservaEntity;
 import com.br.quickReserve.model.enums.StatusReserva;
 import com.br.quickReserve.repository.ReservaRepository;
@@ -24,14 +26,14 @@ public class ReservaService {
             throw new MesaNaoDisponivelException("A mesa não está disponível para a data selecionada!");
         });
 
-        var entidadeReversa = ReservaEntity.builder()
+        var entidadeReserva = ReservaEntity.builder()
             .clienteId(reservaRequestDTO.getClienteId())
             .mesaId(reservaRequestDTO.getMesaId())
             .dataParaReserva(reservaRequestDTO.getDataParaReserva())
             .statusReserva(reservaRequestDTO.getStatusReserva())
         .build();
         
-        return this.reservaRepository.save(entidadeReversa);
+        return this.reservaRepository.save(entidadeReserva);
     }
 
     public ReservaEntity encontrarReservaPorMesaEData(BuscarReversaRequestDTO buscarReversaRequestDTO) {
@@ -48,6 +50,24 @@ public class ReservaService {
 
     public List<ReservaEntity> listarTodasReservas() {
         return this.reservaRepository.findAll();
+    }
+
+    public ReservaEntity atualizarReserva(ReservaUpdateRequestDTO reservaUpdateRequestDTO) {
+
+        ReservaEntity reservaDesatualizada = this.reservaRepository.findById(reservaUpdateRequestDTO.getId()).orElseThrow(() -> {
+            throw new ReservaNaoEncontradaException();
+        });
+
+        ReservaEntity reservaAtualizada = ReservaEntity.builder()
+            .id(reservaUpdateRequestDTO.getId())
+            .clienteId(reservaDesatualizada.getClienteId())
+            .mesaId(reservaUpdateRequestDTO.getMesaId())
+            .dataParaReserva(reservaUpdateRequestDTO.getDataParaReserva())
+            .statusReserva(reservaUpdateRequestDTO.getStatusReserva())
+            .criadoEm(reservaDesatualizada.getCriadoEm())
+        .build();
+
+        return this.reservaRepository.save(reservaAtualizada);
     }
 
 }
