@@ -1,7 +1,10 @@
 package com.br.quickReserve.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.br.quickReserve.dto.request.BuscarReversaMesaRequestDTO;
 import com.br.quickReserve.dto.request.BuscarReversaRequestDTO;
 import com.br.quickReserve.dto.request.ReservaRequestDTO;
 import com.br.quickReserve.exception.MesaNaoDisponivelException;
@@ -31,8 +34,12 @@ public class ReservaService {
         return this.reservaRepository.save(entidadeReversa);
     }
 
-    public ReservaEntity encontrarReserva(BuscarReversaRequestDTO buscarReversaRequestDTO) {
+    public ReservaEntity encontrarReservaPorMesaEData(BuscarReversaRequestDTO buscarReversaRequestDTO) {
         return this.reservaRepository.findByDataParaReservaAndMesaId(buscarReversaRequestDTO.dataParaReserva(), buscarReversaRequestDTO.mesaId()).orElse(new ReservaEntity());
+    }
+
+     public List<ReservaEntity> listarTodasReservas() {
+        return this.reservaRepository.findAll();
     }
 
 }

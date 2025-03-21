@@ -6,8 +6,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.br.quickReserve.model.ReservaEntity;
+import java.util.List;
+
 
 public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
-    // para procurar reservas e verificar se estão disponíveis
+    // para procurar reservas por mesa_id e data, verificando se estão disponíveis
     Optional<ReservaEntity> findByDataParaReservaAndMesaId(LocalDate dataParaReserva, Long mesaId);
+
 }
