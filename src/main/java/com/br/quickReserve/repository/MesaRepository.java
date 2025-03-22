@@ -7,5 +7,7 @@ import java.util.List;
 
 
 public interface MesaRepository extends JpaRepository<MesaEntity, Long> {
-    List<MesaEntity> findByRestauranteId(Long restauranteId);   
+    List<MesaEntity> findByRestauranteId(Long restauranteId);  
+    
+    void deleteAllByRestauranteId(Long restauranteId);
 }

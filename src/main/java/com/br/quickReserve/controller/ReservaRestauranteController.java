@@ -3,7 +3,7 @@ package com.br.quickReserve.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,8 +22,9 @@ public class ReservaRestauranteController {
     private final ReservaService reservaService;
 
     @PreAuthorize("hasRole('RESTAURANTE')")
-    @PostMapping("/atualizar")
+    @PutMapping("/atualizar")
     public ResponseEntity<Object> cadastrarCliente(@RequestBody ReservaUpdateRequestDTO reservaUpdateRequestDTO) {
+        // posteriormente é necessário validar se a reserva a ser atualizada pertence ao restaurante que está a atualizando
         try {
             return new ResponseEntity<>(this.reservaService.atualizarReserva(reservaUpdateRequestDTO), HttpStatus.OK);            
         } catch (Exception e) {

@@ -39,7 +39,7 @@ public class SecurityFilterRestaurante extends OncePerRequestFilter {
                 }
     
                 // setando o id do restaurante no request, assim todas requisições que forem necessárias seu id, serão passadas a partir do subject do token
-                request.setAttribute("restaurante_id", token);
+                request.setAttribute("restaurante_id", token.getSubject()); // tinha esquecido de setar o id pelo subject
     
                 // mapeando as roles que estão no jwt
                 var roles = token.getClaim("roles").asList(Object.class);
