@@ -40,6 +40,9 @@ public class RestauranteService {
             .cnpj(restauranteRequestDTO.getCnpj())
             .email(restauranteRequestDTO.getEmail())
             .senha(passwordEncoder.encode(restauranteRequestDTO.getSenha()))
+            .descricao(restauranteRequestDTO.getDescricao())
+            .imagemPerfil(restauranteRequestDTO.getImagemPerfil())
+            .tipoRestaurante(restauranteRequestDTO.getTipoRestaurante())
         .build();
         return this.restauranteRepository.save(entidadeRestaurante);
     }
@@ -58,6 +61,9 @@ public class RestauranteService {
             restaurante.getNome(),
             restaurante.getCnpj(),
             restaurante.getEmail(),
+            restaurante.getImagemPerfil(),
+            restaurante.getDescricao(),
+            restaurante.getTipoRestaurante().toString(),
             restaurante.getCriadoEm()
         );
 
@@ -76,6 +82,9 @@ public class RestauranteService {
             restauranteAtualizado.getNome(),
             restauranteAtualizado.getCnpj(),
             restauranteAtualizado.getEmail(),
+            restauranteAtualizado.getImagemPerfil(),
+            restauranteAtualizado.getDescricao(),
+            restauranteAtualizado.getTipoRestaurante().toString(),
             restauranteAtualizado.getCriadoEm()
         );
     }
