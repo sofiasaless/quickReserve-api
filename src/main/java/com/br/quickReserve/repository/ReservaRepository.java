@@ -19,6 +19,8 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
     // para procurar reservas por mesa_id e data, verificando se estão disponíveis
     Optional<ReservaEntity> findByDataParaReservaAndMesaId(LocalDate dataParaReserva, Long mesaId);
 
+    Optional<ReservaEntity> findByIdAndClienteId(Long id, Long clienteId);
+
     List<ReservaEntity> findByMesaIdAndStatusReserva(Long mesaId, StatusReserva statusReserva);
 
     // query responsável por filtrar reservas de um restaurante, usando sql nativo por enquanto
