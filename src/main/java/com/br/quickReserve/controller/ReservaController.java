@@ -30,16 +30,9 @@ public class ReservaController {
         return ResponseEntity.ok().body(this.reservaService.encontrarReservaPorMesaEData(buscarReversaRequestDTO));
     }
 
-    @GetMapping("/encontrar/mesa/{id}")
+    @GetMapping("/listar/mesa/{id}")
     public ResponseEntity<List<ReservaEntity>> encontrarReservasDaMesa(@PathVariable Long id, @RequestParam String status) {
         return ResponseEntity.ok().body(this.reservaService.encontrarReservaPorMesa(id, status.toUpperCase()));
-    }
-
-    @GetMapping("/encontrar/restaurante/{id}")
-    // aqui é necessário passar o id e o status na uri
-    // exemplo: http://localhost:8080/reservas/encontrar/restaurante/3?status=pendente
-    public ResponseEntity<List<ReservaEntity>> encontrarReservasDaRestaurante(@PathVariable Long id, @RequestParam String status) {
-        return ResponseEntity.ok().body(this.reservaService.encontrarReservaPorRestaurante(id, status.toUpperCase()));
     }
 
     @GetMapping("/")

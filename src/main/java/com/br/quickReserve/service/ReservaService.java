@@ -53,6 +53,14 @@ public class ReservaService {
         return this.reservaRepository.findAll();
     }
 
+    public List<ReservaEntity> listarTodasReservasPorRestaurante(Long id) {
+        return this.reservaRepository.findAllByRestauranteId(id);
+    }
+
+    public List<ReservaEntity> listarTodasReservasPorCliente(Long id) {
+        return this.reservaRepository.findAllByClienteId(id);
+    }
+
     public ReservaEntity atualizarReserva(ReservaUpdateRequestDTO reservaUpdateRequestDTO) {
 
         ReservaEntity reservaDesatualizada = this.reservaRepository.findById(reservaUpdateRequestDTO.getId()).orElseThrow(() -> {

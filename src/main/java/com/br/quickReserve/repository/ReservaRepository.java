@@ -33,6 +33,18 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
     )
     List<ReservaEntity> findByRestauranteId(@Param("restauranteId") Long restauranteId, @Param("statusReserva") String statusReserva);
 
+    // query para listar TODAS as reservas do restaurente
+    @Query(
+        value = "SELECT rs.* FROM reservas rs " +
+            "JOIN mesas me ON rs.mesa_id = me.id " +
+            "JOIN restaurantes rt ON me.restaurante_id = rt.id " +
+            "WHERE rt.id = :restauranteId", 
+        nativeQuery = true
+    )
+    List<ReservaEntity> findAllByRestauranteId(@Param("restauranteId") Long restauranteId);
+
+    List<ReservaEntity> findAllByClienteId(Long clienteId);
+
     void deleteAllByClienteId(Long clienteId);
 
     // query responsável por deletar as reservas a partir dos id dos restaurantes das mesas
