@@ -206,7 +206,7 @@ Authorization: Bearer Token
 }
 ```
 
-#### Listar reservas de um cliente
+#### Listagem reservas de um cliente
 
 ```bash
 GET - http://localhost:8080/reservas/cliente/listarTodas
@@ -295,8 +295,8 @@ Authorization: Bearer Token
 
 ```json
 {
-	"id":8,
-	"statusReserva":"CANCELADA"
+	"mesaId":11,
+	"dataParaReserva":"2025-01-20"
 }
 ```
 
@@ -309,14 +309,7 @@ GET - http://localhost:8080/restaurante/perfil
 Authorization: Bearer Token
 ```
 
-```json
-{
-	"mesaId":11,
-	"dataParaReserva":"2025-01-20"
-}
-```
-
-##### Resposta
+##### Resposta (em caso de 200 OK)
 ```json
 {
 	"id": 10,
@@ -337,7 +330,7 @@ DELETE - http://localhost:8080/restaurante/deletar
 Authorization: Bearer Token
 ```
 
-#### Listar reservas pendentes, canceladas e confirmadas de um restaurante
+#### Listagem reservas pendentes, canceladas e confirmadas de um restaurante
 ```bash
 GET - http://localhost:8080/reservas/restaurante/listar?status={status_reservas}
 GET - http://localhost:8080/reservas/restaurante/listar?status=pendente
