@@ -5,7 +5,6 @@ Esta é uma API RESTful desenvolvida para gerenciar reservas de mesas em restaur
 
 A API foi construída com Java e Spring Boot, seguindo os princípios de arquitetura limpa e boas práticas de desenvolvimento. Com suporte a integração via Docker, o projeto está preparado para ambientes de produção e fácil implantação.
 
-
 ## Instalação
 
 ### Requisitos Básicos
@@ -17,7 +16,7 @@ Antes de tudo, você precisa ter instalado:
 - Git  
 - Docker  
 
-### ⚙Execução
+### Execução
 
 - 1. Clone o repositório
 ```bash
@@ -61,6 +60,8 @@ Antes de tudo, você precisa ter instalado:
 Acesse a API em [http://localhost:8080](http://localhost:8080)
 
 ## End-points
+
+Aqui estão alguns dos principais endpoints da API. Esses endpoints permitem a interação com os recursos do sistema, como autenticação de usuários, efetuação de reservas e gerenciamento de dados.
 
 ### Rotas públicas
 
