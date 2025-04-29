@@ -4,13 +4,18 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.quickReserve.dto.request.RestauranteRequestDTO;
+import com.br.quickReserve.dto.request.RestauranteUpdateRequestDTO;
 import com.br.quickReserve.exception.dto.BadRequestDTO;
 import com.br.quickReserve.model.RestauranteEntity;
 import com.br.quickReserve.service.RestauranteService;
@@ -21,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/restaurante")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RestauranteController {
     
     private final RestauranteService restauranteService;
@@ -48,6 +54,29 @@ public class RestauranteController {
             return ResponseEntity.ok().body(perfil);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize("hasRole('RESTAURANTE')")
+    @PutMapping("/atualizar")
+    public ResponseEntity<Object> atualizarPerfil(@RequestBody RestauranteUpdateRequestDTO restauranteUpdateRequestDTO, HttpServletRequest request) {
+        try {
+            var id = request.getAttribute("restaurante_id");
+            return new ResponseEntity<>(this.restauranteService.atualizarPerfilRestaurante(Long.valueOf(id.toString()), restauranteUpdateRequestDTO), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new BadRequestDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PreAuthorize("hasRole('RESTAURANTE')")
+    @DeleteMapping("/deletar")
+    public ResponseEntity<Object> deletarRestaurante(HttpServletRequest request) {
+        try {
+            var id = request.getAttribute("restaurante_id").toString();
+            this.restauranteService.deletarPerfilRestaurante(Long.valueOf(id));
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new BadRequestDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 

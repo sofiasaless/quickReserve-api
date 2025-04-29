@@ -7,5 +7,9 @@ public record PerfilRestauranteReponseDTO(
     String nome,
     String cnpj,
     String email,
+    String imagemPerfil,
+    String imagemCapa,
+    String descricao,
+    String tipoRestaurante,
     LocalDateTime criadoEm
 ) {}

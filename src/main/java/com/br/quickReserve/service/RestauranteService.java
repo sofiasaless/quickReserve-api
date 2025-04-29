@@ -7,11 +7,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.br.quickReserve.dto.request.RestauranteRequestDTO;
+import com.br.quickReserve.dto.request.RestauranteUpdateRequestDTO;
 import com.br.quickReserve.dto.response.PerfilRestauranteReponseDTO;
 import com.br.quickReserve.exception.RestauranteJaCadastradoException;
 import com.br.quickReserve.model.RestauranteEntity;
+import com.br.quickReserve.repository.MesaRepository;
+import com.br.quickReserve.repository.ReservaRepository;
 import com.br.quickReserve.repository.RestauranteRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,6 +23,10 @@ import lombok.RequiredArgsConstructor;
 public class RestauranteService {
     
     private final RestauranteRepository restauranteRepository;
+
+    private final ReservaRepository reservaRepository;
+
+    private final MesaRepository mesaRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -32,6 +40,9 @@ public class RestauranteService {
             .cnpj(restauranteRequestDTO.getCnpj())
             .email(restauranteRequestDTO.getEmail())
             .senha(passwordEncoder.encode(restauranteRequestDTO.getSenha()))
+            .descricao(restauranteRequestDTO.getDescricao())
+            .imagemPerfil(restauranteRequestDTO.getImagemPerfil())
+            .tipoRestaurante(restauranteRequestDTO.getTipoRestaurante())
         .build();
         return this.restauranteRepository.save(entidadeRestaurante);
     }
@@ -50,9 +61,46 @@ public class RestauranteService {
             restaurante.getNome(),
             restaurante.getCnpj(),
             restaurante.getEmail(),
+            restaurante.getImagemPerfil(),
+            restaurante.getImagemCapa(),
+            restaurante.getDescricao(),
+            restaurante.getTipoRestaurante().toString(),
             restaurante.getCriadoEm()
         );
 
+    }
+
+    public PerfilRestauranteReponseDTO atualizarPerfilRestaurante(Long id, RestauranteUpdateRequestDTO restauranteUpdateRequestDTO) {
+        var restauranteDesatualizado = this.restauranteRepository.findById(id).get();
+
+        restauranteDesatualizado.setNome(restauranteUpdateRequestDTO.getNome());
+        restauranteDesatualizado.setSenha(passwordEncoder.encode(restauranteUpdateRequestDTO.getSenha()));
+
+        var restauranteAtualizado = this.restauranteRepository.save(restauranteDesatualizado);
+
+        return new PerfilRestauranteReponseDTO(
+            restauranteAtualizado.getId(),
+            restauranteAtualizado.getNome(),
+            restauranteAtualizado.getCnpj(),
+            restauranteAtualizado.getEmail(),
+            restauranteAtualizado.getImagemPerfil(),
+            restauranteAtualizado.getImagemCapa(),
+            restauranteAtualizado.getDescricao(),
+            restauranteAtualizado.getTipoRestaurante().toString(),
+            restauranteAtualizado.getCriadoEm()
+        );
+    }
+
+    @Transactional
+    public void deletarPerfilRestaurante(Long id) {
+        // necessario primeiro apagar todas as reservas do restaurante
+        this.reservaRepository.deleteAllByRestauranteId(id);
+
+        // depois necessario apagar todas as mesas do restaurante
+        this.mesaRepository.deleteAllByRestauranteId(id);
+
+        // só então apagar o restaurante
+        this.restauranteRepository.deleteById(id);
     }
 
 }

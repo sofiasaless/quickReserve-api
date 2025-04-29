@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.br.quickReserve.dto.request.BuscarReversaRequestDTO;
 import com.br.quickReserve.dto.request.ReservaRequestDTO;
 import com.br.quickReserve.dto.request.ReservaUpdateRequestDTO;
+import com.br.quickReserve.exception.AlteracaoNaoAutorizadaException;
 import com.br.quickReserve.exception.MesaNaoDisponivelException;
 import com.br.quickReserve.exception.ReservaNaoEncontradaException;
 import com.br.quickReserve.model.ReservaEntity;
@@ -52,22 +53,40 @@ public class ReservaService {
         return this.reservaRepository.findAll();
     }
 
+    public List<ReservaEntity> listarTodasReservasPorRestaurante(Long id) {
+        return this.reservaRepository.findAllByRestauranteId(id);
+    }
+
+    public List<ReservaEntity> listarTodasReservasPorCliente(Long id) {
+        return this.reservaRepository.findAllByClienteId(id);
+    }
+
     public ReservaEntity atualizarReserva(ReservaUpdateRequestDTO reservaUpdateRequestDTO) {
 
         ReservaEntity reservaDesatualizada = this.reservaRepository.findById(reservaUpdateRequestDTO.getId()).orElseThrow(() -> {
             throw new ReservaNaoEncontradaException();
         });
 
-        ReservaEntity reservaAtualizada = ReservaEntity.builder()
-            .id(reservaUpdateRequestDTO.getId())
-            .clienteId(reservaDesatualizada.getClienteId())
-            .mesaId(reservaUpdateRequestDTO.getMesaId())
-            .dataParaReserva(reservaUpdateRequestDTO.getDataParaReserva())
-            .statusReserva(reservaUpdateRequestDTO.getStatusReserva())
-            .criadoEm(reservaDesatualizada.getCriadoEm())
-        .build();
+        reservaDesatualizada.setMesaId(reservaUpdateRequestDTO.getMesaId());
+        reservaDesatualizada.setDataParaReserva(reservaUpdateRequestDTO.getDataParaReserva());
+        reservaDesatualizada.setStatusReserva(reservaUpdateRequestDTO.getStatusReserva());
 
-        return this.reservaRepository.save(reservaAtualizada);
+        return this.reservaRepository.save(reservaDesatualizada);
+    }
+
+    public ReservaEntity atualizarReservaViaCliente(Long id, ReservaUpdateRequestDTO reservaUpdateRequestDTO, Long clienteId) {
+        ReservaEntity reservaDesatualizada = this.reservaRepository.findByIdAndClienteId(id, clienteId).orElseThrow(() -> {
+            throw new ReservaNaoEncontradaException();
+        });
+
+        if (reservaDesatualizada.getStatusReserva() == StatusReserva.CONFIRMADA || reservaDesatualizada.getStatusReserva() == StatusReserva.CANCELADA) {
+            throw new AlteracaoNaoAutorizadaException();
+        }
+
+        reservaDesatualizada.setMesaId(reservaUpdateRequestDTO.getMesaId());
+        reservaDesatualizada.setDataParaReserva(reservaUpdateRequestDTO.getDataParaReserva());
+        
+        return this.reservaRepository.save(reservaDesatualizada);
     }
 
 }
