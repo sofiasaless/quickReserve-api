@@ -40,6 +40,8 @@ public class RestauranteEntity {
 
     private String imagemPerfil;
 
+    private String imagemCapa;
+
     @Column(unique = true)
     private String cnpj;
 

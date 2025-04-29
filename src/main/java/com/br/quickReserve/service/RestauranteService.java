@@ -62,6 +62,7 @@ public class RestauranteService {
             restaurante.getCnpj(),
             restaurante.getEmail(),
             restaurante.getImagemPerfil(),
+            restaurante.getImagemCapa(),
             restaurante.getDescricao(),
             restaurante.getTipoRestaurante().toString(),
             restaurante.getCriadoEm()
@@ -83,6 +84,7 @@ public class RestauranteService {
             restauranteAtualizado.getCnpj(),
             restauranteAtualizado.getEmail(),
             restauranteAtualizado.getImagemPerfil(),
+            restauranteAtualizado.getImagemCapa(),
             restauranteAtualizado.getDescricao(),
             restauranteAtualizado.getTipoRestaurante().toString(),
             restauranteAtualizado.getCriadoEm()

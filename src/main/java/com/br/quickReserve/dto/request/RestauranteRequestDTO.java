@@ -24,6 +24,9 @@ public class RestauranteRequestDTO {
     @URL
     private String imagemPerfil;
 
+    @URL
+    private String imagemCapa;
+
     private TipoRestaurante tipoRestaurante;
     
     private String email;

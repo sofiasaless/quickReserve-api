@@ -4,5 +4,6 @@ public enum TipoRestaurante {
     LANCHONETE,
     HAMBURGUERIA,
     RESTAURANTE,
-    PIZZARIA
+    PIZZARIA,
+    CHURRASCARIA
 }
