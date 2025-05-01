@@ -17,6 +17,7 @@ import com.br.quickReserve.dto.request.MesaRequestDTO;
 import com.br.quickReserve.model.MesaEntity;
 import com.br.quickReserve.service.MesaService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -29,8 +30,9 @@ public class MesaController {
 
     @PreAuthorize("hasRole('RESTAURANTE')")
     @PostMapping("/nova-mesa")
-    public ResponseEntity<Object> cadastrarMesa(@RequestBody MesaRequestDTO mesaRequestDTO) {
-        return new ResponseEntity<>(this.mesaService.salvarMesa(mesaRequestDTO), HttpStatus.CREATED);
+    public ResponseEntity<Object> cadastrarMesa(@RequestBody MesaRequestDTO mesaRequestDTO, HttpServletRequest request) {
+        var restauranteId = Long.valueOf(request.getAttribute("restaurante_id").toString());        
+        return new ResponseEntity<>(this.mesaService.salvarMesa(mesaRequestDTO, restauranteId), HttpStatus.CREATED);
     }
 
     // mapeando as mesas do restaurante

@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +44,15 @@ public class RestauranteController {
     @GetMapping("/")
     public ResponseEntity<List<RestauranteEntity>> listarTodos() {
         return ResponseEntity.ok().body(this.restauranteService.listarTodosRestaurantes());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> visualizarRestaurante(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok().body(this.restauranteService.visualizarPerfilPorId(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping("/perfil")
