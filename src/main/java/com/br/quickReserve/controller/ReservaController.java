@@ -27,9 +27,16 @@ public class ReservaController {
     private final ReservaService reservaService;
 
     // trata-se de uma busca a partir do "id da mesa" e da "data para reserva"
-    @PostMapping("/encontrar")
-    public ResponseEntity<ReservaEntity> encontrarReservas(@RequestBody BuscarReversaRequestDTO buscarReversaRequestDTO) {
-        return ResponseEntity.ok().body(this.reservaService.encontrarReservaPorMesaEData(buscarReversaRequestDTO));
+    // @PostMapping("/encontrar")
+    // public ResponseEntity<ReservaEntity> encontrarReservas(@RequestBody BuscarReversaRequestDTO buscarReversaRequestDTO) {
+    //     return ResponseEntity.ok().body(this.reservaService.encontrarReservaPorMesaEData(buscarReversaRequestDTO));
+    // }
+
+    // encontrando a reserva de uma mesa por data e idMesa, a função acima fica obsoleta
+    // http://localhost:8080/reservas/encontrar/1?dataParaReserva=2025-05-03
+    @GetMapping("/encontrar/{mesaId}")
+    public ResponseEntity<ReservaEntity> encontrarReservasDaMesaPorPath(@PathVariable Long mesaId, @RequestParam String dataParaReserva) {
+        return ResponseEntity.ok().body(this.reservaService.encontrarReservaPorMesaEData(mesaId, dataParaReserva));
     }
 
     @GetMapping("/listar/mesa/{id}")
