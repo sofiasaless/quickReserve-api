@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.br.quickReserve.dto.request.AuthRequestDTO;
+import com.br.quickReserve.model.enums.TipoUsuario;
 import com.br.quickReserve.repository.ClienteRepository;
 import com.br.quickReserve.repository.RestauranteRepository;
 
@@ -78,5 +79,19 @@ public class AuthUsuariosService {
             .sign(algorithm) // passando o algoritmo de criação do token
         ;
         return token;
+    }
+
+    public void verificarStatusUsuario(Long id, TipoUsuario tipoUsuario) {
+        if (tipoUsuario == TipoUsuario.CLIENTE) {
+            this.clienteRepository.findById(id).orElseThrow(() -> {
+                throw new UsernameNotFoundException("Cliente não logado!");
+            });
+            return;
+        }
+        
+        this.restauranteRepository.findById(id).orElseThrow(() -> {
+            throw new UsernameNotFoundException("Restaurante não logado!");
+        });
+
     }
 }
