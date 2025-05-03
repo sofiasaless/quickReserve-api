@@ -1,5 +1,6 @@
 package com.br.quickReserve.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -37,8 +38,15 @@ public class ReservaService {
         return this.reservaRepository.save(entidadeReserva);
     }
 
-    public ReservaEntity encontrarReservaPorMesaEData(BuscarReversaRequestDTO buscarReversaRequestDTO) {
-        return this.reservaRepository.findByDataParaReservaAndMesaId(buscarReversaRequestDTO.dataParaReserva(), buscarReversaRequestDTO.mesaId()).orElse(new ReservaEntity());
+    // public ReservaEntity encontrarReservaPorMesaEData(BuscarReversaRequestDTO buscarReversaRequestDTO) {
+    //     return this.reservaRepository.findByDataParaReservaAndMesaId(buscarReversaRequestDTO.dataParaReserva(), buscarReversaRequestDTO.mesaId()).orElse(new ReservaEntity());
+    // }
+
+    public ReservaEntity encontrarReservaPorMesaEData(Long mesaId, String dataReserva) {
+        String[] datas = dataReserva.split("-");
+        LocalDate dataParaReserva = LocalDate.of(Integer.parseInt(datas[0]), Integer.parseInt(datas[1]), Integer.parseInt(datas[2]));
+
+        return this.reservaRepository.findByDataParaReservaAndMesaId(dataParaReserva, mesaId).orElse(new ReservaEntity());
     }
     
     public List<ReservaEntity> encontrarReservaPorMesa(Long id, String statusReserva) {

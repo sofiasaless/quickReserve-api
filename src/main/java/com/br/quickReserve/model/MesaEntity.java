@@ -31,6 +31,8 @@ public class MesaEntity {
 
     private int numero;
 
+    private int capacidadePessoas;
+
     @ManyToOne // posso ter varias mesas para um restaurante, mas uma mesa só pode ter um restaurante
     @JoinColumn(name = "restaurante_id", insertable = false, updatable = false)
     private RestauranteEntity restauranteEntity;

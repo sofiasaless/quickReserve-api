@@ -16,10 +16,11 @@ public class MesaService {
     
     private final MesaRepository mesaRepository;
 
-    public MesaEntity salvarMesa(MesaRequestDTO mesaRequestDTO) {
+    public MesaEntity salvarMesa(MesaRequestDTO mesaRequestDTO, Long restauranteId) {
         var entidadeMesa = MesaEntity.builder()
             .numero(mesaRequestDTO.getNumero())
-            .restauranteId(mesaRequestDTO.getRestauranteId())
+            .capacidadePessoas(mesaRequestDTO.getCapacidadePessoas())
+            .restauranteId(restauranteId)
         .build();
         
         return this.mesaRepository.save(entidadeMesa);

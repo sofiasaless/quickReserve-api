@@ -42,6 +42,7 @@ public class RestauranteService {
             .senha(passwordEncoder.encode(restauranteRequestDTO.getSenha()))
             .descricao(restauranteRequestDTO.getDescricao())
             .imagemPerfil(restauranteRequestDTO.getImagemPerfil())
+            .imagemCapa(restauranteRequestDTO.getImagemCapa())
             .tipoRestaurante(restauranteRequestDTO.getTipoRestaurante())
         .build();
         return this.restauranteRepository.save(entidadeRestaurante);
