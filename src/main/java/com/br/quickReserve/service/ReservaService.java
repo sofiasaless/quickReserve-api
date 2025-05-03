@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.br.quickReserve.dto.request.BuscarReversaRequestDTO;
 import com.br.quickReserve.dto.request.ReservaRequestDTO;
 import com.br.quickReserve.dto.request.ReservaUpdateRequestDTO;
 import com.br.quickReserve.exception.AlteracaoNaoAutorizadaException;
@@ -32,6 +31,9 @@ public class ReservaService {
             .clienteId(reservaRequestDTO.getClienteId())
             .mesaId(reservaRequestDTO.getMesaId())
             .dataParaReserva(reservaRequestDTO.getDataParaReserva())
+            .nomeParaReserva(reservaRequestDTO.getNomeParaReserva())
+            .quantidadePessoas(reservaRequestDTO.getQuantidadePessoas())
+            .observacoes(reservaRequestDTO.getObservacoes())
             .statusReserva(reservaRequestDTO.getStatusReserva())
         .build();
         
@@ -92,6 +94,8 @@ public class ReservaService {
         }
 
         reservaDesatualizada.setMesaId(reservaUpdateRequestDTO.getMesaId());
+        reservaDesatualizada.setNomeParaReserva(reservaUpdateRequestDTO.getNomeParaReserva());
+        reservaDesatualizada.setObservacoes(reservaUpdateRequestDTO.getObservacoes());
         reservaDesatualizada.setDataParaReserva(reservaUpdateRequestDTO.getDataParaReserva());
         
         return this.reservaRepository.save(reservaDesatualizada);
