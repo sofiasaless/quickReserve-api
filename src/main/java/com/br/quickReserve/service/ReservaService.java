@@ -59,6 +59,10 @@ public class ReservaService {
         return this.reservaRepository.findByRestauranteId(id, statusReserva);
     }
 
+    public List<ReservaEntity> encontrarReservaPorCliente(Long id, String statusReserva) {
+        return this.reservaRepository.findByClienteIdAndStatusReserva(id, StatusReserva.valueOf(statusReserva));
+    }
+
     public List<ReservaEntity> listarTodasReservas() {
         return this.reservaRepository.findAll();
     }
