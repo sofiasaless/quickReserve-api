@@ -23,6 +23,12 @@ public class ReservaUpdateRequestDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataParaReserva;
 
+    private String nomeParaReserva;
+
+    private int quantidadePessoas;
+
+    private String observacoes;
+
     @Builder.Default
     private StatusReserva statusReserva = StatusReserva.PENDENTE;
     

@@ -104,4 +104,23 @@ public class RestauranteService {
         this.restauranteRepository.deleteById(id);
     }
 
+    public PerfilRestauranteReponseDTO encontrarRestaurantePorMesa(Long mesaId) {
+        var restauranteEncontrado = this.restauranteRepository.findByMesaId(mesaId).orElseThrow(() -> {
+            throw new UsernameNotFoundException("Restaurante não encontrado!");
+        });
+
+        return new PerfilRestauranteReponseDTO(
+            restauranteEncontrado.getId(),
+            restauranteEncontrado.getNome(),
+            restauranteEncontrado.getCnpj(),
+            restauranteEncontrado.getEmail(),
+            restauranteEncontrado.getImagemPerfil(),
+            restauranteEncontrado.getImagemCapa(),
+            restauranteEncontrado.getDescricao(),
+            restauranteEncontrado.getTipoRestaurante().toString(),
+            restauranteEncontrado.getCriadoEm()
+        );
+        
+    }
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.quickReserve.dto.request.ReservaRequestDTO;
@@ -62,6 +63,14 @@ public class ReservaClienteController {
     public ResponseEntity<List<ReservaEntity>> listarReservasCiente(HttpServletRequest request) {
         var clienteId = request.getAttribute("cliente_id").toString();
         return ResponseEntity.ok().body(this.reservaService.listarTodasReservasPorCliente(Long.valueOf(clienteId)));
+    }
+
+    @GetMapping("/listar")
+    // aqui é necessário passar o id e o status na uri
+    // exemplo: http://localhost:8080/reservas/cliente/listar/status=pendente
+    public ResponseEntity<List<ReservaEntity>> encontrarReservasDoCliente(@RequestParam String status, HttpServletRequest request) {
+        var clienteId = Long.valueOf(request.getAttribute("cliente_id").toString());
+        return ResponseEntity.ok().body(this.reservaService.encontrarReservaPorCliente(clienteId, status.toUpperCase()));        
     }
 
 

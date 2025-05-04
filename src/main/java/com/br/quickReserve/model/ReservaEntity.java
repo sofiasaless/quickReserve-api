@@ -56,6 +56,12 @@ public class ReservaEntity {
 
     @Enumerated(EnumType.STRING)
     private StatusReserva statusReserva;
+
+    private int quantidadePessoas;
+
+    private String nomeParaReserva;
+
+    private String observacoes;
     
     @CreationTimestamp
     private LocalDateTime criadoEm;
